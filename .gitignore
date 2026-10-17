@@ -1,0 +1,21 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.streamlit/secrets.toml
+.env
+.env.*
+!.env.example
+hasil_demo/
+output/
+logs/
+*.log
+.DS_Store
+Thumbs.db
+# Rekaman nyata dan file pengguna tidak boleh masuk ke repo
+private/
+rekaman_pribadi/
+rekaman_asli/
+uploads/
+*.key
