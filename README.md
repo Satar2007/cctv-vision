@@ -4,6 +4,36 @@ Aplikasi demonstrasi **Streamlit + OpenCV** untuk karya tulis inovasi SIMAPRES W
 
 > **DEMO FIKTIF, BUKAN PENYELIDIKAN NYATA.** Subjek `S-01`, sepeda motor, dan peristiwa helm seluruhnya dibuat secara sintetis. Informasi ciri pakaian dan linimasa berasal dari naskah simulasi, **bukan hasil prediksi identitas, pengenalan wajah, atau kesimpulan bersalah**. Deteksi orang dan helm di demo ini menggunakan **segmentasi warna HSV OpenCV** yang khusus diatur untuk objek ilustrasi. Tidak boleh diartikan sebagai kemampuan deteksi generik pada rekaman CCTV sungguhan.
 
+## Pratinjau demonstrasi
+
+![Perbandingan frame CCTV simulasi buram (kiri) dan hasil peningkatan serta penandaan warna (kanan)](docs/images/perbandingan-simulasi.png)
+
+*Cuplikan asli proyek: kiri video rendah kualitas **buatan**, kanan peningkatan citra serta kotak deteksi dari segmentasi HSV. Kedua sisi menggambarkan adegan fiktif, bukan pembuktian identitas.*
+
+## Alur sistem
+
+```text
+Video referensi sintetis ──> degradasi terkontrol ──> video CCTV simulasi
+                                                        │
+                                                        ▼
+                                              Pemrosesan frame OpenCV
+                                            gamma → CLAHE → denoise → sharpen
+                                                        │
+                                                        ▼
+                                            Segmentasi warna HSV terarah
+                                             jaket marun / helm kuning
+                                                        │
+                           ┌────────────────────────────┼─────────────────────┐
+                           ▼                            ▼                     ▼
+                      MP4 anotasi                   Crop PNG             Metrik PSNR
+                           │                            │                     │
+                           └────────────────────────────┴─────────────────────┘
+                                                        ▼
+                                            Dashboard dan laporan JSON
+```
+
+Penjelasan implementasi terdapat di [arsitektur sistem](docs/ARSITEKTUR.md) dan [catatan pengujian](docs/PENGUJIAN.md).
+
 ## Fitur yang benar-benar bekerja
 
 - **Satu tombol** untuk pemrosesan video simulasi 12 detik (144 frame, 800×450, 12 fps).
